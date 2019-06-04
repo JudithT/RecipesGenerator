@@ -12,7 +12,7 @@ class Ingredient(db.Model):
     ingredient_classification = db.Column(db.String(100), nullable=False)
     ingredient_name = db.Column(db.String, nullable=False)
 
-    recipes = db.relationship("Recipes",
+    recipes = db.relationship("Recipe",
                               secondary="ingredients_recipes",
                               backref="ingredients_list")
     def __repr__(self):
@@ -43,9 +43,13 @@ class Recipe(db.Model):
     dishtype = db.Column(db.String(500), nullable=False)
     preparation_time = db.Column(db.Integer, nullable=False)
     recipe_origin = db.Column(db.String(55), nullable=False)
+    recipe_name = db.Column(db.String(55), nullable=False)
+
+
     
     # ingredients_list: list of Ingredient objects (the ingredients used to make recipe)
     # favorited_by: list of User objects that have favorited this recipe
+
 
     def __repr__(self):
         return '<Recipes recipe_id={} instructions={} dishtype={} preparation_time={} recipe_origin={}>'.format(
@@ -127,3 +131,4 @@ def connect_to_db(app):
 if __name__ == '__main__':
     from server import app 
     connect_to_db(app)
+    db.create_all()

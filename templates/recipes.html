@@ -1,0 +1,26 @@
+
+ {%extends 'base.html'%}
+{%block content %}
+<h2>Recipes</h2>
+    <ul>
+        <li>
+           <div> Recipe title: {{title}}</div> 
+          <div>Recipe instructions: {{instruction}}</div>  
+          <div> Recipe Image:  <img src="{{ image}}" alt="recipe image"> </div>
+          <div>likes: {{likes}}</div>   
+          <div> Recipe video: {{video}}</div>  
+        
+        </li><br>
+      
+    </ul>
+
+    <div>
+        <span class="star glyphicon glyphicon-star-empty"></span>
+      </div>
+      
+      <br/>
+      
+      <div>
+        <i class="heart fa fa-heart-o"></i>
+      </div>
+    {%endblock%}
