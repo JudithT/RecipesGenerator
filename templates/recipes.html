@@ -13,14 +13,13 @@
         </li><br>
       
     </ul>
-
-    <div>
-        <span class="star glyphicon glyphicon-star-empty"></span>
-      </div>
       
-      <br/>
-      
-      <div>
-        <i class="heart fa fa-heart-o"></i>
-      </div>
+    <form action="/recipes/{{ recipe_id }}" method="POST">
+        <button type="submit" class="btn btn-success">
+        
+        
+          <i class="heart fa fa-heart-o"></i>
+        
+        </button>
+     </form>
     {%endblock%}

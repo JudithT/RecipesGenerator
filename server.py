@@ -2,7 +2,7 @@
 from jinja2 import StrictUndefined
 from flask import (Flask, render_template,redirect,request,flash, session)
 # from flask_debugtoolbar import DebugToolbarExtension
-from model import User, connect_to_db, db, Recipe
+from model import User, connect_to_db, db, Recipe,UserFavoriteRecipe
 
 import requests
 
@@ -196,7 +196,7 @@ def recipe(recipe_id):
     print("videodata",data)
 
 
-    return render_template("recipes.html",id=id, title=title, image=image, likes=likes, instruction=instruction, video=video)
+    return render_template("recipes.html",id=id, title=title, image=image, likes=likes, instruction=instruction, video=video, recipe_id= recipe_id)
 
     # user = User.query.filter_by(user_id=user_id).first()
     
@@ -204,12 +204,19 @@ def recipe(recipe_id):
 
     # return render_template("user.html", userfavorites = user_favorites_recipes)
 
-@app.route('/recipes/<recipe_id>', methods=['POST'])
+@app.route('/recipes/<int:recipe_id>', methods=['POST'])
 def likes(recipe_id):
+
+    if session.get("user_id"):
+        recipe_id = recipe_id
         user_id = session.get("user_id")
         userfavoriterecipe= UserFavoriteRecipe(user_id = user_id, recipe_id = recipe_id )
         db.session.add(userfavoriterecipe)
         db.session.commit()
+
+        return redirect("/recipes/{recipe_id}")
+    else:
+        return redirect('/signin')
 
 
 @app.route('/logout')
