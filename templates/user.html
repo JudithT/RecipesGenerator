@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% block content%}
-<h2>Your favorite recipes</h2>
+<h2>My favorite recipes</h2>
   <ul>
-      {%for recipe in userfavorites%}
+      {%for favorite in userfavorites%}
       <li>
-            <div> {{recipe.title}}</div>  
-            <div> Recipe Instruction: {{ recipe.instructions}}</div>
-            <div>Preparation Time: {{recipe.preparation_time}}</div>
-            <div> Recipe origin: {{recipe.recipe_origin}}</div>   
+            <div> {{favorite.recipe_name}}</div> 
+            <div> {{favorite.instructions}}</div>  
           </li><br>
           {%endfor%}
       </ul>

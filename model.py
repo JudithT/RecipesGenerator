@@ -12,9 +12,8 @@ class Ingredient(db.Model):
     ingredient_classification = db.Column(db.String(100), nullable=False)
     ingredient_name = db.Column(db.String, nullable=False)
 
-    recipes = db.relationship("Recipe",
-                              secondary="ingredients_recipes",
-                              backref="ingredients_list")
+    recipes = db.relationship("IngredientRecipe",
+                              backref="ingredients_recipes")
     def __repr__(self):
         return '<Ingredients ingredient_id={} ingredient_classification={} ingredient_name={}>'.format(
             self.ingredient_id,
@@ -40,12 +39,10 @@ class Recipe(db.Model):
 
     recipe_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     instructions = db.Column(db.Text, nullable=False)
-    dishtype = db.Column(db.String(500), nullable=False)
-    preparation_time = db.Column(db.Integer, nullable=False)
-    recipe_origin = db.Column(db.String(55), nullable=False)
+    dishtype = db.Column(db.String(500), nullable=True)
+    preparation_time = db.Column(db.Integer, nullable=True)
+    recipe_origin = db.Column(db.String(55), nullable=True)
     recipe_name = db.Column(db.String(55), nullable=False)
-
-
     
     # ingredients_list: list of Ingredient objects (the ingredients used to make recipe)
     # favorited_by: list of User objects that have favorited this recipe
@@ -67,9 +64,9 @@ class UserFavoriteRecipe(db.Model):
 
     __tablename__ = "users_favorite_recipes"
 
-    userfavoriterecpie_id = db.Column(db.Integer,primary_key=True, nullable=False, autoincrement=True)
+    userfavoriterecipe_id = db.Column(db.Integer,primary_key=True, nullable=False, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    recipe_id = db.Column(db.Integer, nullable=False) #db.ForeignKey('recipes.recipe_id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'), nullable=False)
 
     def __repr__(self):
         return '<UserFavoriteRecipe userfavoriterecpie_id={} user_id={} recipe_id={}>'.format(
@@ -91,12 +88,8 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
 
     # List of Recipe objects
-    favorite_recipes = db.relationship("UserFavoriteRecipe",
-                                       secondary="users_favorite_recipes")#,
-                                    #    backref="favorited_by")
-    ingredients_list = db.relationship("Ingredient",
-                                       secondary="users_ingredients",
-                                       backref="users")
+    favorites = db.relationship("UserFavoriteRecipe",
+                                    backref="users")
 
     def __repr__(self):
         return '<User user_id={} fname={} lname={} email={} password={}>'.format(

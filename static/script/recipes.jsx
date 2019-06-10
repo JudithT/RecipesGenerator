@@ -1,8 +1,7 @@
-const url = terms => `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=5&ranking=1&ignorePantry=false&ingredients=${terms}`
-
 class RecipeCard extends React.Component{
     state = { }
     componentDidMount(){
+       
 
         //alert('calling the API to get videos for recipe ID ' + this.props.id);
         const instructionUrl = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${this.props.id}/information`
@@ -38,7 +37,6 @@ class RecipeCard extends React.Component{
     render(){
        
         return (
-
             <div className="card" style={{width: "18rem", marginTop: "4rem"}}>
                 <img className="card-img-top" src={this.props.image} alt="Card image cap" />
                 <div className="card-body">
@@ -168,14 +166,18 @@ class App extends React.Component {
 
     handleSearch(evt){
         evt.preventDefault()
-        fetch(`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=5&ranking=1&ignorePantry=false&ingredients=${this.state.query}`,
+
+        
+        const url =  window.location.search? "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=5&ranking=1&ignorePantry=false&ingredients="
+        : "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C+gluten&number=10&offset=0&type=main+course&query="
+        fetch(`${url}${this.state.query}`,
             {headers: {
                 "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
                 "X-RapidAPI-Key": "0fd28a9296msh61f75fee9171434p1d6995jsn9f02884e2ae5"
         }}).then(res => res.json())
          .then( result => {
              console.log("AAAAA", result)
-        this.setState({ recipes:result});
+        this.setState({ recipes:result.results? result.results: result});
          })
       }
     
@@ -199,13 +201,14 @@ class App extends React.Component {
             // recipelist += this.state.recipes[i].title
             recipelist.push(
             <RecipeCard
+            
               title={this.state.recipes[i].title}
               id={this.state.recipes[i].id}
               query={this.state.query}
               name={this.state.recipes[i].name}
               usedIngredients={this.state.recipes[i].usedIngredients}
               missedIngredients={this.state.recipes[i].missedIngredients}
-              image={this.state.recipes[i].image} />);
+              image={this.state.recipes[i].image.includes('https')? this.state.recipes[i].image: "https://spoonacular.com/recipeImages/" + this.state.recipes[i].image} />);
              
 
         }
@@ -237,7 +240,6 @@ class App extends React.Component {
     }
 }
 
-
 ReactDOM.render(<App />, document.getElementById('root'));
 
-    
+

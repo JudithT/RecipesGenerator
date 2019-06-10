@@ -1,24 +1,37 @@
 
-<h2>Registration</h2>
-<form action="/processRegister" method=POST>
-        <label>
-            First Name:
-             <input type="text" name="fname" />
-        </label>    
-        <label>
-            Last Name:
-                <input type="text" name="lname" />
-        </label>   
-        <label>
-                Email:
-                    <input type="text" name="email" />
-            </label>   
-            <label>
-                Password:
-                    <input type="password" name="password" />
-            </label>  
-            <label>
-                        <input type="submit" name="submit" />
-                </label>  
-    </form>
+ <!doctype html>
+<html>
+<head> 
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+      <link href="/static/css/auth.css" rel="stylesheet">
+
+</head>
+<body>
+        <form action="/processRegister" method=POST>
+            <div class="form-group">
+                    <label for="first name">First Name</label>
+                    <input type="text" class="form-control"  name="fname" id="fname" aria-describedby="first name" placeholder="First Name">
+                  </div>
+                  <div class="form-group">
+                        <label for="last name">Last Name</label>
+                        <input type="text" class="form-control"  name="lname" id="lname" aria-describedby="last name" placeholder="last name">
+                      </div>
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control"  name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password"  name ="password" class="form-control" id="password" placeholder="Password">
+                </div>
+    
+                <button type="submit"  name="submit" class="btn btn-primary">Submit</button>
+              </form>
+
+</body>
+
     

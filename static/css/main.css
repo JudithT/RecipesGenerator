@@ -1,0 +1,11 @@
+#welcome{
+    height:90vh;
+    width:100%;
+    background-image: url("../images/backgroundImage.jpg");
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+
+
+}

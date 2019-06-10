@@ -1,19 +1,16 @@
 
  {%extends 'base.html'%}
 {%block content %}
-<h2>Recipes</h2>
-    <ul>
-        <li>
-           <div> Recipe title: {{title}}</div> 
-          <div>Recipe instructions: {{instruction}}</div>  
-          <div> Recipe Image:  <img src="{{ image}}" alt="recipe image"> </div>
-          <div>likes: {{likes}}</div>   
-          <div> Recipe video: {{video}}</div>  
-        
-        </li><br>
-      
-    </ul>
-      
+           <h1> {{title}}</h1> 
+          <div>Recipe instructions: 
+            <p>{{instruction}}</p></div>  
+          <div><img src="{{ image}}" alt="recipe image"> </div>
+          <div>likes: {{likes}}</div> 
+          {% if video %}  
+          <div> Recipe video:</div>  
+          <iframe id="video" width="420" height="315" src="https://www.youtube.com/embed/{{video['youTubeId']}}" frameborder="0" allowfullscreen></iframe>
+          {%  endif %}
+            
     <form action="/recipes/{{ recipe_id }}" method="POST">
         <button type="submit" class="btn btn-success">
         
@@ -22,4 +19,5 @@
         
         </button>
      </form>
+     
     {%endblock%}

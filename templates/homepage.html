@@ -1,30 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{% block title %}{% endblock %}</title>
+{%extends 'base.html'%}
+{%block content %}
+<div id="root"></div>
+
+<script type="text/jsx" src="/static/script/recipes.jsx">
 	
-	<!-- We'll load React dependencies on all pages for this app. -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
-	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
-	<script src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.development.js"></script>
-    <script async defer
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap">
-	</script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	<script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtU9uSOvDIibGTD2X1aSlQLEKbk0OP224&callback=initMap">
-	</script>
-	<!-- Include any page-specific Javascript using this block. -->
-    <div id="root"></div>
+</script>
 
-    <link href="/static/css/site.css" rel="stylesheet">
-    <script type="text/jsx" src="/static/script/recipes.jsx">
-        
-    </script>
-
-</head>
+{%endblock%}
 
