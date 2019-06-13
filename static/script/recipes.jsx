@@ -38,7 +38,7 @@ class RecipeCard extends React.Component{
        
         return (
             <div className="card" style={{width: "18rem", marginTop: "4rem"}}>
-                <img className="card-img-top" src={this.props.image} alt="Card image cap" />
+                <img className="card-img-top" style={{height: '300px'}} src={this.props.image} alt="Card image cap" />
                 <div className="card-body">
                     <h5 className="card-title"> {this.props.title}</h5>
                     <p className="card-text"> {this.state.instruction?this.state.instruction.slice(0, 100) + "...": ""}</p>
@@ -134,13 +134,14 @@ class SearchBar extends React.Component{
     render(){
        
         return(
-            <form>
+            <form id="searchbar">
                 <input 
-                placeholder="search for ..."
+                id="inputForsearchbar"
+                placeholder="Search for ..."
                 onChange={this.props.handlequerychange}
                 value = {this.props.query}
                 />
-                <button onClick={this.props.handleSearch}>Submit</button>
+                <button onClick={this.props.handleSearch}  name="submit" className="btn btn-primary">Submit</button>
             </form>
             
         )
@@ -169,7 +170,7 @@ class App extends React.Component {
 
         
         const url =  window.location.search? "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=5&ranking=1&ignorePantry=false&ingredients="
-        : "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C+gluten&number=10&offset=0&type=main+course&query="
+        : "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query="
         fetch(`${url}${this.state.query}`,
             {headers: {
                 "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",

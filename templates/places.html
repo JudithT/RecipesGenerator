@@ -1,8 +1,12 @@
-<!DOCTYPE html>
-<html>
+
+{% extends 'base.html' %}
+{% block content %}
+
+
   <head>
     <title>Place Searches</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script type='text/javascript' src='/script/config.js'></script>
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -31,7 +35,7 @@
             const { latitude: lat, longitude: lng } = coordinates.coords;
             const location =  new google.maps.LatLng(lat, lng);
             var pos  = {lat, lng};
-            const APIKEY = 'AIzaSyCtU9uSOvDIibGTD2X1aSlQLEKbk0OP224'
+            const APIKEY = 'AIzaSyBGeYnH3937g-IFwcLo_djqkZKyAcTWnbs';
             const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=1500&type=supermarket&key=${APIKEY}`
             map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: pos });
             var marker = new google.maps.Marker({position: pos, map: map});
@@ -83,6 +87,6 @@
   </head>
   <body>
     <div  id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtU9uSOvDIibGTD2X1aSlQLEKbk0OP224&libraries=places&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGeYnH3937g-IFwcLo_djqkZKyAcTWnbs&libraries=places&callback=initMap" async defer></script>
   </body>
-</html>
+{% endblock %}

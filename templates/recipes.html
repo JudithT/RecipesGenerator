@@ -1,23 +1,45 @@
-
- {%extends 'base.html'%}
+{%extends 'base.html'%}
 {%block content %}
-           <h1> {{title}}</h1> 
-          <div>Recipe instructions: 
-            <p>{{instruction}}</p></div>  
-          <div><img src="{{ image}}" alt="recipe image"> </div>
-          <div>likes: {{likes}}</div> 
-          {% if video %}  
-          <div> Recipe video:</div>  
-          <iframe id="video" width="420" height="315" src="https://www.youtube.com/embed/{{video['youTubeId']}}" frameborder="0" allowfullscreen></iframe>
-          {%  endif %}
-            
-    <form action="/recipes/{{ recipe_id }}" method="POST">
-        <button type="submit" class="btn btn-success">
-        
-        
-          <i class="heart fa fa-heart-o"></i>
-        
+<div id="parent-container">
+  <div class="vertical">
+    <div>
+      <img src="{{ image}}" alt="recipe image">
+    </div>
+    <div>
+        {% if video %}
+      <div> Recipe video:</div>
+      <iframe id="video" width="420" height="315" src="https://www.youtube.com/embed/{{video['youTubeId']}}"
+        frameborder="0" allowfullscreen></iframe>
+      {%  endif %}
+    </div>
+
+  </div>
+  <div class="vertical">
+    <div>
+      <h1 id="recipetitle"> {{title}}</h1>
+      <div>Recipe instructions:
+        <p>{{instruction}}</p>
+      </div>
+      <div> </div>
+    
+      <form action="/recipes/{{ recipe_id }}" method="POST">
+        <button type="submit" class="btn btn-default">
+          <i class="fas fa-heart"></i>
         </button>
-     </form>
-     
-    {%endblock%}
+      </form>
+    </div>
+
+    <div>
+      <h2>Ingredients</h2>
+      <ul>
+      {% for item in ingredients %}
+        <li>{{item['name']}}</li>
+      {% endfor %}
+    </ul>
+    </div>
+
+  </div>
+</div>
+
+
+{%endblock%}

@@ -1,11 +1,77 @@
-#welcome{
-    height:90vh;
-    width:100%;
-    background-image: url("../images/backgroundImage.jpg");
-    background-size: cover;
-    justify-content: center;
-    align-items: center;
-    display:flex;
+.navbar{
+    
+    background-color: #035AA6;
+    margin-bottom: 
+   
+    
+}
+.nav-link{
+    color: white !important;
+}
 
+.card-title {
+    font-family: 'Berkshire Swash', cursive;
 
 }
+
+#recipetitle{
+    font-family: 'Berkshire Swash', cursive;
+
+}
+
+#searchbar{
+    width: 100%;
+    text-align:center;
+    margin-top: 6vh;
+}
+
+#inputForsearchbar{
+    width: 300px;
+    height: 40px;
+    margin-top:5px;
+}
+
+/* #myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 10%; 
+    min-height: 10%;
+  }
+  
+  /* Add some content at the bottom of the video/page */
+  .content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Style the button used to pause/play the video */
+  #myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  #myBtn:hover {
+    background: #ddd;
+    color: black;
+  }
+  #parent-container {
+      display: flex;
+      flex-direction: row;
+
+  }
+  .vertical{
+    display: flex;
+    flex-direction: column;
+    width: 50vw
+
+  }

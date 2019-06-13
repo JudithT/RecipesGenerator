@@ -6,7 +6,7 @@ class RecipeByRecipe extends React.Component {
     }
 
     render(){
-        const url ="https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C+gluten&number=10&offset=0&type=main+course&query="
+        const url =""
 
     
         return(  

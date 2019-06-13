@@ -76,14 +76,11 @@ def register_process():
     user_email = User.query.filter_by(email=email).first()
     
     if user_email != None:
-        flash("You registered already, please proceed to sign in page")
         return redirect('/signin')
     else:
-        flash("Successful registration")
         user=User(fname=fname,lname=lname, email=email, password= password)
         db.session.add(user)
         db.session.commit()
-        print("USER=====", user)
         session['user_id'] = user.user_id
 
         return render_template("homepage.html")
@@ -109,7 +106,7 @@ def userpage():
     if session['user_id']:
         user_id = session['user_id']
         user = User.query.filter_by(user_id=user_id).first()
-        user_favs = user.favorites
+        user_favs = user.favorites if user else []
         favoriterecipe=[]
         for item in user_favs:
             fav = Recipe.query.get(item.recipe_id)
@@ -162,13 +159,18 @@ def recipeinfo(recipe_id):
   }
 )
     data = response.json()
-    #print ("=======> data",data)
+
     #print(dir(data))
     title = data.get("title")
     image = data.get("image")
     likes = data.get("likes", 0)
     instruction = data.get("instructions", "none")
-
+    analyzedInstructions = data.get("analyzedInstructions", "none")
+    ingredients = []
+    if analyzedInstructions:
+        for step in analyzedInstructions[0]['steps']:
+            ingredients = ingredients + step['ingredients']
+    
     """ recipe videos"""
     payloads={"query": title, "includeingredients": title}
     response = requests.get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/videos/search",
@@ -184,7 +186,7 @@ def recipeinfo(recipe_id):
        "likes": likes,
        "instruction": instruction,
        "video": video,
-     
+       "ingredients": ingredients 
     }
 
     print(recipeInfo)
@@ -200,10 +202,11 @@ def recipeDisplay(recipe_id):
     likes=recipeinfomation["likes"]
     instruction=recipeinfomation["instruction"]
     video=recipeinfomation["video"]
+    ingredients= recipeinfomation["ingredients"]
    
 
 
-    return render_template("recipes.html",recipe_id=recipe_id, title= title, image=image, likes=likes, instruction=instruction, video=video[0] if len(video) else None)
+    return render_template("recipes.html",recipe_id=recipe_id, ingredients=ingredients, title= title, image=image, likes=likes, instruction=instruction, video=video[0] if len(video) else None)
 
 @app.route('/recipes/<int:recipe_id>', methods=['POST'])
 def likes(recipe_id):
@@ -217,18 +220,18 @@ def likes(recipe_id):
         likes=recipeinfomation["likes"]
         instruction=recipeinfomation["instruction"]
         video=recipeinfomation["video"]
-        userfavoriterecipe= UserFavoriteRecipe.query.filter_by(user_id = user_id, recipe_id = recipe_id )
+        userfavoriterecipe= UserFavoriteRecipe.query.filter_by(user_id = user_id, recipe_id = recipe_id ).first()
         if userfavoriterecipe is None:
-            recipe = Recipe(recipe_id= recipe_id, instructions= instruction, recipe_name= title)
+            recipe = Recipe(recipe_id= recipe_id, instructions= instruction, recipe_name= title, image=image)
             db.session.add(recipe)
             db.session.commit()
-            
+            print("====user id", user_id, recipe_id)
             userfavoriterecipe= UserFavoriteRecipe(user_id = user_id, recipe_id = recipe_id )
             db.session.add(userfavoriterecipe)
             db.session.commit()
 
         return redirect(f"/recipes/{recipe_id}")
-    else:
+        
         return redirect('/signin')
 
 

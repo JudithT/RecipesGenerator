@@ -7,19 +7,24 @@ body{
 
 form{
     width: 600px;
-    background-color: gray;
+    background-color:#e4e7fa;
     margin-top: 100px;
     padding: 50px;
+    opacity: 0.9;
 }
 
 #welcome{
     height:100vh;
     width:100%;
-    background-image: url("../images/backgroundImage.jpg");
+    background-image: url("../images/backgroundImage.jpg"); 
     background-size: cover;
     justify-content: center;
     align-items: center;
     display:flex;
 
 
+}
+
+#delicious{
+    font-family: 'Berkshire Swash', cursive;
 }
