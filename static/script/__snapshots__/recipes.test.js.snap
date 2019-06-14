@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It search a recipe by name or by ingredients thing 1`] = `1`;
