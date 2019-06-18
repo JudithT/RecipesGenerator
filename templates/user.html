@@ -7,7 +7,7 @@
           <div class="card" style="width:18rem; margin-top: 4rem">
               <img class="card-img-top" style="height: 300px" src={{favorite.image}} alt="Card image cap" />
               <div class="card-body">
-                  <h5 class="card-title"> f{{favorite.recipe_name}}</h5>
+                  <h5 class="card-title"> {{favorite.recipe_name}}</h5>
                   {% if favorite.instructions %}
                    <p class="card-text"> {{favorite.instructions[:100]}} ...</p>
                   {% endif %}

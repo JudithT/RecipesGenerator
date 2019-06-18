@@ -43,7 +43,7 @@ class Recipe(db.Model):
     preparation_time = db.Column(db.Integer, nullable=True)
     recipe_origin = db.Column(db.String(55), nullable=True)
     recipe_name = db.Column(db.String(55), nullable=False)
-    image = db.Column(db.String(55), nullable=False)
+    image = db.Column(db.String(500), nullable=False)
     
     # ingredients_list: list of Ingredient objects (the ingredients used to make recipe)
     # favorited_by: list of User objects that have favorited this recipe

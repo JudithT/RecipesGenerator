@@ -5,11 +5,19 @@ from flask import (Flask, render_template,redirect,request,flash, session)
 from model import User, connect_to_db, db, Recipe,UserFavoriteRecipe
 
 import requests
+import os
+
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 # Required to use Flask sessions and the debug toolbar
-app.secret_key = "ABC"
+
+try:
+    app.secret_key = os.environ['FLASKSECRETKEY']
+except KeyError:
+    app.secret_key = "this is a test secret"
+
+
 
 # Normally, if you use an undefined variable in Jinja2, it fails
 # silently. This is horrible. Fix this so that, instead, it raises an
@@ -218,16 +226,23 @@ def likes(recipe_id):
         userfavoriterecipe= UserFavoriteRecipe.query.filter_by(user_id = user_id, recipe_id = recipe_id ).first()
         if userfavoriterecipe is None:
             recipe = Recipe(recipe_id= recipe_id, instructions= instruction, recipe_name= title, image=image)
-            db.session.add(recipe)
-            db.session.commit()
+
+            try: 
+                db.session.add(recipe)
+                db.session.commit()
+            except Exception:
+                pass
+
             print("====user id", user_id, recipe_id)
             userfavoriterecipe= UserFavoriteRecipe(user_id = user_id, recipe_id = recipe_id )
+            
             db.session.add(userfavoriterecipe)
             db.session.commit()
+        
 
         return redirect(f"/recipes/{recipe_id}")
         
-        return redirect('/signin')
+    return redirect('/signin')
 
 
 @app.route('/places')
@@ -235,10 +250,10 @@ def places():
     return render_template("places.html")
 
 
-@app.route('/logout')
-def logout():
-    session[user_id]=None
-    return redirect('/')
+# @app.route('/logout')
+# def logout():
+#     session[user_id]=None
+#     return redirect('/')
 
 
 
