@@ -1,13 +1,13 @@
+import os
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import BigInteger, Text
 
 db = SQLAlchemy()
-
 
 class Ingredient(db.Model):
     """Ingredients model"""
 
     __tablename__ = "ingredients"
-
     ingredient_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     ingredient_classification = db.Column(db.String(100), nullable=False)
     ingredient_name = db.Column(db.String, nullable=False)
@@ -38,7 +38,7 @@ class Recipe(db.Model):
     __tablename__ = "recipes"
 
     recipe_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    instructions = db.Column(db.Text, nullable=False)
+    instructions = db.Column(Text, nullable=False)
     dishtype = db.Column(db.String(500), nullable=True)
     preparation_time = db.Column(db.Integer, nullable=True)
     recipe_origin = db.Column(db.String(55), nullable=True)
@@ -67,7 +67,7 @@ class UserFavoriteRecipe(db.Model):
 
     userfavoriterecipe_id = db.Column(db.Integer,primary_key=True, nullable=False, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'), nullable=False)
+    recipe_id = db.Column(BigInteger, db.ForeignKey('recipes.recipe_id'), nullable=False)
 
     def __repr__(self):
         return '<UserFavoriteRecipe userfavoriterecpie_id={} user_id={} recipe_id={}>'.format(
@@ -115,14 +115,8 @@ class UserIngredient(db.Model):
 def connect_to_db(app):
     """Connect to database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///recipes'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'postgresql:///recipes'
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
-
-
-if __name__ == '__main__':
-    from server import app 
-    connect_to_db(app)
-    db.create_all()

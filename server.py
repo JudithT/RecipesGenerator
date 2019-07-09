@@ -86,7 +86,7 @@ def register_process():
     if user_email != None:
         return redirect('/signin')
     else:
-        user=User(fname=fname,lname=lname, email=email, password= password)
+        user= User(fname=fname,lname=lname, email=email, password= password)
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.user_id
@@ -223,15 +223,17 @@ def likes(recipe_id):
         likes=recipeinfomation["likes"]
         instruction=recipeinfomation["instruction"]
         video=recipeinfomation["video"]
+        recipe = Recipe.query.filter_by(recipe_id=recipe_id).first()
         userfavoriterecipe= UserFavoriteRecipe.query.filter_by(user_id = user_id, recipe_id = recipe_id ).first()
         if userfavoriterecipe is None:
-            recipe = Recipe(recipe_id= recipe_id, instructions= instruction, recipe_name= title, image=image)
+            if not recipe:
+                recipe = Recipe(recipe_id= recipe_id, instructions= instruction, recipe_name= title, image=image)
 
-            try: 
-                db.session.add(recipe)
-                db.session.commit()
-            except Exception:
-                pass
+                try: 
+                    db.session.add(recipe)
+                    db.session.commit()
+                except Exception:
+                    pass
 
             print("====user id", user_id, recipe_id)
             userfavoriterecipe= UserFavoriteRecipe(user_id = user_id, recipe_id = recipe_id )
@@ -250,10 +252,10 @@ def places():
     return render_template("places.html")
 
 
-# @app.route('/logout')
-# def logout():
-#     session[user_id]=None
-#     return redirect('/')
+@app.route('/logout')
+def logout():
+    session["user_id"]=None
+    return redirect('/')
 
 
 
@@ -266,11 +268,12 @@ if __name__ == "__main__":
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)
+    db.create_all()
 
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
 
-    app.run(debug=True)
+    app.run()
 
 
 
