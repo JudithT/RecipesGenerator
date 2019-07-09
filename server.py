@@ -12,6 +12,9 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'postgresql:///recipes'
 app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.app = app
+db.init_app(app)
 # Required to use Flask sessions and the debug toolbar
 
 try:
@@ -266,11 +269,7 @@ def logout():
 
 
 if __name__ == "__main__":
-
     app.jinja_env.auto_reload = app.debug
-    db.app = app
-    db.init_app(app)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.create_all()
 
     # Use the DebugToolbar
