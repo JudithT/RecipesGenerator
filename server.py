@@ -2,7 +2,7 @@
 from jinja2 import StrictUndefined
 from flask import (Flask, render_template,redirect,request,flash, session)
 # from flask_debugtoolbar import DebugToolbarExtension
-from model import User, connect_to_db, db, Recipe,UserFavoriteRecipe
+from model import User, db, Recipe,UserFavoriteRecipe
 
 import requests
 import os
@@ -267,7 +267,10 @@ if __name__ == "__main__":
 
     app.jinja_env.auto_reload = app.debug
 
-    connect_to_db(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'postgresql:///recipes'
+    app.config['SQLALCHEMY_ECHO'] = True
+    db.app = app
+    db.init_app(app)
     db.create_all()
 
     # Use the DebugToolbar
