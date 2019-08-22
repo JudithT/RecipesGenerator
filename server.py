@@ -24,18 +24,8 @@ except KeyError:
 
 
 
-# Normally, if you use an undefined variable in Jinja2, it fails
-# silently. This is horrible. Fix this so that, instead, it raises an
-# error.
 app.jinja_env.undefined = StrictUndefined
 
-
-
-# RECIPE_TOKEN = os.environ.get('RECIPE_TOKEN')
-
-# RECIPEBASEDINGREDIENTS_URL = "https://www.eventbriteapi.com/v3/"
-
-# USER_ID = "Your-User-Id-Here"
 
 
 @app.route('/')
@@ -272,8 +262,6 @@ if __name__ == "__main__":
     app.jinja_env.auto_reload = app.debug
     db.create_all()
 
-    # Use the DebugToolbar
-    # DebugToolbarExtension(app)
 
     app.run()
 
